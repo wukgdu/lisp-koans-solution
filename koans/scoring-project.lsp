@@ -50,8 +50,20 @@
 ; Your goal is to write the score method.
 
 (defun score (dice)
-  ; You need to write this method
-)
+  (let ((num-count (make-array 10 :initial-element 0))
+        (result 0))
+    (dolist (d dice)
+      (incf (aref num-count d)))
+    (dotimes (idx 10)
+      (let ((counts (aref num-count idx)))
+        (case idx
+          (1 (multiple-value-bind (a b) (truncate counts 3)
+               (incf result (+ (* 1000 a) (* 100 b)))))
+          (5 (multiple-value-bind (a b) (truncate counts 3)
+               (incf result (+ (* 500 a) (* 50 b)))))
+          (t (multiple-value-bind (a b) (truncate counts 3)
+               (incf result (* a (* 100 idx))))))))
+    result))
 
 (define-test test-score-of-an-empty-list-is-zero
     (assert-equal 0 (score nil)))

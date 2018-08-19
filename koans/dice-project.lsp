@@ -22,15 +22,18 @@
 
 ;;  YOU WRITE THIS PART:
 (defclass dice-set ()
-  () ;; WRITE DICE-SET CLASS BODY HERE
+  (dices) ;; WRITE DICE-SET CLASS BODY HERE
 )
 
 (defmethod get-values ((object dice-set))
-  ;; WRITE GET-VALUES METHOD DEFINITION HERE
+  (slot-value object 'dices)
 )
 
 (defmethod roll (how-many (object dice-set))
-  ;; WRITE ROLL METHOD DEFINITION HERE
+  (setf (slot-value object 'dices) nil)
+  (symbol-macrolet ((res (slot-value object 'dices)))
+    (dotimes (i how-many res)
+      (push (random how-many) res)))
 )
 
 
