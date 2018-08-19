@@ -18,10 +18,7 @@
 (define-condition triangle-error  (error) ())
 
 (defun triangle (a b c)
-  (cond ((or (<= a 0)
-             (<= b 0)
-             (<= c 0)
-             (<= (+ a b) c)
+  (cond ((or (<= (+ a b) c)
              (<= (+ a c) b)
              (<= (+ b c) a))
          (error 'triangle-error))
